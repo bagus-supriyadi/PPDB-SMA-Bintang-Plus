@@ -13,12 +13,12 @@ Sistem PPDB Online ini menggunakan Google Apps Script dan Google Sheets sebagai 
    - `No Pendaftaran`
    - `Status`
    - `Alasan Penolakan`
-   - (Tambahkan header lain sesuai form, misal: `Nama Lengkap`, `NIK`, `Jenis Kelamin`, dll)
+   - (Tambahkan header lain sesuai form, wajib sama persis : `Nama Lengkap`, `NIK`, `Jenis Kelamin`, dll)
 5. Di sheet `Pengaturan`, buat header di baris pertama:
    - A1: `Key`
    - B1: `Value`
 6. Isi data awal di sheet `Pengaturan`:
-   - A2: `namaSekolah` | B2: `SDN Harapan Bangsa`
+   - A2: `namaSekolah` | B2: `SMA Bintang Plus`
    - A3: `statusPendaftaran` | B3: `Buka`
    - A4: `tahunPendaftaran` | B4: `2024`
    - (Tambahkan pengaturan lain sesuai kebutuhan)
@@ -127,8 +127,8 @@ function doPost(e) {
       }
     }
     
-    const lastRow = sheet.getLastRow();
-    const noPendaftaran = `PPDB-${tahunPendaftaran}-${String(lastRow).padStart(3, '0')}`;
+    const count = sheet.getLastRow() - 1;
+    const noPendaftaran = `PPDB-${tahun}-${String(count + 1).padStart(3, '0')}`;
     
     const rowData = headers.map(header => {
       if (header === 'Timestamp') return new Date().toISOString();
