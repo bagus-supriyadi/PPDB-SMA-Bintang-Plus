@@ -219,6 +219,6 @@ function doGet(e) {
    ```
 3. Tempel URL yang Anda salin ke dalam tanda kutip:
    ```typescript
-   const GAS_WEB_APP_URL = "https://script.google.com/macros/s/AKfycb.../exec"; 
+   const GAS_WEB_APP_URL = "[https://script.google.com/macros/s/AKfycb.../exec](https://script.google.com/macros/s/AKfycbwXIy-R082flCQ2GJQ2B_35u1uG2DQmWFqLOwuRm9Sjwtl-NTcLRr2TmdgB8zqIa7NW/exec)"; 
    ```
 4. Simpan file, dan aplikasi Anda sekarang sudah terhubung dengan Google Sheets!
