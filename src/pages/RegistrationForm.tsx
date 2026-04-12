@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'motion/react';
-import { Upload, AlertCircle, FileText, Loader2, MapPin } from 'lucide-react';
+import { Upload, AlertCircle, MapPin, Loader2 } from 'lucide-react';
 import Swal from 'sweetalert2';
 import { Link } from 'react-router-dom';
 import { submitRegistration, RegistrationData } from '../services/api';
@@ -17,211 +17,217 @@ export default function RegistrationForm() {
   const [isAgreed, setIsAgreed] = useState(false);
   const [formData, setFormData] = useState<RegistrationData>({});
   const [previews, setPreviews] = useState<Record<string, string>>({});
-  const [mapLocation, setMapLocation] = useState<{ lat: number; lng: number } | null>(null);
+  const [mapLocation, setMapLocation] = useState<any>(null);
   const [distance, setDistance] = useState<number | null>(null);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+  const inputClass =
+    "w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all";
+
+  const handleChange = (e: any) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>, fieldId: string) => {
-    const file = e.target.files?.[0];
+  const handleFileChange = (e: any, field: string) => {
+    const file = e.target.files[0];
     if (!file) return;
 
     if (file.size > 2 * 1024 * 1024) {
-      Swal.fire({
-        icon: 'error',
-        title: 'File Terlalu Besar',
-        text: 'Ukuran maksimal file adalah 2MB',
-        confirmButtonColor: '#3b82f6'
-      });
-      e.target.value = '';
+      Swal.fire('Error', 'Maksimal file 2MB', 'error');
       return;
     }
 
     const reader = new FileReader();
-    reader.onloadend = () => {
-      const base64String = reader.result as string;
-      setFormData(prev => ({ ...prev, [fieldId]: base64String }));
-      setPreviews(prev => ({ ...prev, [fieldId]: base64String }));
+    reader.onload = () => {
+      setFormData({ ...formData, [field]: reader.result });
+      setPreviews({ ...previews, [field]: reader.result as string });
     };
     reader.readAsDataURL(file);
   };
 
   const handleLocationSelect = (lat: number, lng: number) => {
     setMapLocation({ lat, lng });
-    setFormData(prev => ({ ...prev, 'Koordinat Lokasi': `${lat}, ${lng}` }));
+    setFormData({ ...formData, "Koordinat Lokasi": `${lat},${lng}` });
 
     if (settings?.koordinatSekolah) {
-      const [schoolLat, schoolLng] = settings.koordinatSekolah.split(',').map(s => parseFloat(s.trim()));
-      if (!isNaN(schoolLat) && !isNaN(schoolLng)) {
-        const dist = calculateDistance(lat, lng, schoolLat, schoolLng);
-        setDistance(dist);
-        setFormData(prev => ({ ...prev, 'Jarak ke Sekolah (km)': dist.toFixed(2) }));
-      }
+      const [slat, slng] = settings.koordinatSekolah.split(',').map(Number);
+      const dist = calculateDistance(lat, lng, slat, slng);
+      setDistance(dist);
+      setFormData(prev => ({ ...prev, "Jarak ke Sekolah (km)": dist.toFixed(2) }));
     }
   };
 
-  const printProof = (noPendaftaran: string) => {
+  // ✅ PDF PREMIUM
+  const printProof = (no: string) => {
     const doc = new jsPDF();
 
-    doc.setFillColor(37, 99, 235);
-    doc.rect(0, 0, 210, 40, 'F');
+    doc.setFillColor(30, 64, 175);
+    doc.rect(0, 0, 210, 30, 'F');
 
     doc.setTextColor(255, 255, 255);
-    doc.setFontSize(20);
-    doc.text("BUKTI PENDAFTARAN PPDB SMA", 105, 20, { align: "center" });
+    doc.setFontSize(16);
+    doc.text("BUKTI PENDAFTARAN PPDB", 105, 12, { align: "center" });
 
-    doc.setFontSize(13);
-    doc.text(settings?.namaSekolah || "SMA Bintang Plus", 105, 30, { align: "center" });
+    doc.setFontSize(12);
+    doc.text(settings?.namaSekolah || "", 105, 20, { align: "center" });
 
     doc.setTextColor(0, 0, 0);
     doc.setFontSize(11);
 
-    let y = 55;
+    let y = 40;
 
-    doc.text(`No Pendaftaran : ${noPendaftaran}`, 20, y);
+    doc.text(`No Pendaftaran : ${no}`, 20, y);
     y += 10;
 
-    settings?.formFields?.forEach(field => {
-      if (field.type !== 'file') {
-        const value = formData[field.label] || '-';
-        const splitText = doc.splitTextToSize(`${field.label} : ${value}`, 170);
-        doc.text(splitText, 20, y);
-        y += splitText.length * 8;
-      }
+    Object.keys(formData).forEach((key) => {
+      if (typeof formData[key] !== 'string' || formData[key].startsWith('data:')) return;
+
+      const text = `${key} : ${formData[key]}`;
+      const split = doc.splitTextToSize(text, 170);
+      doc.text(split, 20, y);
+      y += split.length * 7;
     });
 
-    doc.setFontSize(9);
-    doc.text("Simpan bukti ini untuk cek kelulusan.", 105, 280, { align: "center" });
+    // tanda tangan
+    y += 20;
 
-    doc.save(`Bukti_PPDB_${noPendaftaran}.pdf`);
+    doc.text("Orang Tua/Wali", 20, y);
+    doc.text("Calon Siswa", 140, y);
+
+    y += 25;
+
+    doc.text("(__________________)", 20, y);
+    doc.text("(__________________)", 140, y);
+
+    doc.save(`PPDB_${no}.pdf`);
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
 
     if (!isAgreed) {
-      Swal.fire({
-        icon: 'warning',
-        title: 'Wajib Disetujui',
-        text: 'Centang pernyataan terlebih dahulu',
-      });
+      Swal.fire('Perhatian', 'Centang persetujuan', 'warning');
       return;
     }
 
     if (!mapLocation) {
-      Swal.fire({
-        icon: 'warning',
-        title: 'Lokasi Belum Dipilih',
-        text: 'Silakan tandai lokasi di peta',
-      });
+      Swal.fire('Perhatian', 'Pilih lokasi map', 'warning');
       return;
     }
 
     setIsSubmitting(true);
 
     try {
-      const response = await submitRegistration(formData);
+      const res = await submitRegistration(formData);
 
-      if (response.status === 'success') {
+      if (res.status === 'success') {
         Swal.fire({
           icon: 'success',
-          title: 'Berhasil!',
-          html: `No Pendaftaran:<br><b>${response.noPendaftaran}</b>`,
-          confirmButtonText: 'Download Bukti',
-          showCancelButton: true,
-        }).then((result) => {
-          if (result.isConfirmed) {
-            printProof(response.noPendaftaran);
-          }
-          window.location.href = '/';
+          title: 'Berhasil',
+          html: `<b>${res.noPendaftaran}</b>`,
+          confirmButtonText: 'Download Bukti'
+        }).then(() => {
+          printProof(res.noPendaftaran);
+          window.location.href = "/";
         });
-      } else {
-        throw new Error();
       }
     } catch {
-      Swal.fire({
-        icon: 'error',
-        title: 'Gagal',
-        text: 'Terjadi kesalahan saat mengirim data',
-      });
-    } finally {
-      setIsSubmitting(false);
+      Swal.fire('Error', 'Gagal kirim data', 'error');
     }
+
+    setIsSubmitting(false);
   };
 
   if (isClosed) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <AlertCircle size={40} className="mx-auto text-red-500 mb-4" />
-          <h2 className="text-xl font-bold">Pendaftaran Ditutup</h2>
-          <Link to="/" className="text-blue-600">Kembali</Link>
-        </div>
+        <h1>Pendaftaran Ditutup</h1>
       </div>
     );
   }
 
-  const textFields = settings?.formFields?.filter(f => f.type !== 'file') || [];
-  const fileFields = settings?.formFields?.filter(f => f.type === 'file') || [];
+  const textFields = settings?.formFields.filter(f => f.type !== 'file') || [];
+  const fileFields = settings?.formFields.filter(f => f.type === 'file') || [];
 
   return (
-    <div className="min-h-screen bg-slate-50 py-10">
-      <div className="max-w-3xl mx-auto">
-        <div className="bg-white p-8 rounded-xl shadow">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-white py-12 px-4">
 
-          <h2 className="text-2xl font-bold mb-6 text-center">
-            Formulir PPDB SMA
-          </h2>
+      <div className="max-w-5xl mx-auto bg-white/80 backdrop-blur-lg p-10 rounded-2xl shadow-xl border">
 
-          <form onSubmit={handleSubmit} className="space-y-6">
+        <h2 className="text-3xl font-bold text-center mb-10">
+          Formulir Pendaftaran PPDB
+        </h2>
 
-            {textFields.map(field => (
-              <div key={field.id}>
-                <label className="block text-sm font-medium mb-1">
-                  {field.label}
-                </label>
-                <input
-                  type={field.type}
-                  name={field.label}
-                  value={formData[field.label] || ''}
-                  onChange={handleChange}
-                  className="w-full border p-2 rounded"
-                />
-              </div>
-            ))}
+        <form onSubmit={handleSubmit} className="space-y-10">
 
-            <div>
-              <label className="flex items-center gap-2 mb-2">
-                <MapPin size={16} /> Lokasi Rumah
-              </label>
-              <MapPicker onLocationSelect={handleLocationSelect} />
+          {/* DATA DIRI */}
+          <div>
+            <h3 className="font-bold text-xl mb-6">Data Diri</h3>
+
+            <div className="grid md:grid-cols-2 gap-6">
+              {textFields.map(field => (
+                <div key={field.id}>
+                  <label className="text-sm font-medium">{field.label}</label>
+                  <input
+                    type={field.type}
+                    name={field.label}
+                    value={formData[field.label] || ''}
+                    onChange={handleChange}
+                    className={inputClass}
+                  />
+                </div>
+              ))}
             </div>
+          </div>
 
-            {fileFields.map(field => (
-              <div key={field.id}>
-                <label className="block text-sm mb-1">{field.label}</label>
-                <input type="file" onChange={(e) => handleFileChange(e, field.label)} />
-              </div>
-            ))}
+          {/* MAP */}
+          <div>
+            <h3 className="font-bold text-xl mb-4">Lokasi Rumah</h3>
+            <MapPicker onLocationSelect={handleLocationSelect} />
+            {distance && (
+              <p className="mt-2 text-blue-600 font-medium">
+                Jarak ke sekolah: {distance.toFixed(2)} km
+              </p>
+            )}
+          </div>
 
-            <label className="flex items-center gap-2">
-              <input type="checkbox" onChange={(e) => setIsAgreed(e.target.checked)} />
-              Saya menyatakan data benar
-            </label>
+          {/* FILE */}
+          <div>
+            <h3 className="font-bold text-xl mb-6">Upload Berkas</h3>
 
-            <button
-              type="submit"
-              disabled={isSubmitting}
-              className="w-full bg-blue-600 text-white py-3 rounded"
-            >
-              {isSubmitting ? 'Memproses...' : 'Kirim'}
-            </button>
+            <div className="grid md:grid-cols-2 gap-6">
+              {fileFields.map(field => (
+                <div key={field.id}>
+                  <label className="text-sm">{field.label}</label>
 
-          </form>
-        </div>
+                  <div className="border-2 border-dashed p-4 rounded-xl text-center cursor-pointer">
+                    <Upload className="mx-auto mb-2" />
+                    <input type="file" onChange={(e) => handleFileChange(e, field.label)} />
+                  </div>
+
+                  {previews[field.label] && (
+                    <img src={previews[field.label]} className="mt-2 h-24 object-cover rounded" />
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* AGREEMENT */}
+          <div className="flex items-center gap-2">
+            <input type="checkbox" onChange={(e) => setIsAgreed(e.target.checked)} />
+            <span>Saya menyatakan data benar</span>
+          </div>
+
+          {/* BUTTON */}
+          <button
+            disabled={isSubmitting}
+            className="w-full py-4 rounded-xl text-white font-bold text-lg 
+            bg-gradient-to-r from-blue-600 to-indigo-600 hover:scale-105 transition-all shadow-lg"
+          >
+            {isSubmitting ? <Loader2 className="animate-spin mx-auto" /> : "Kirim Pendaftaran"}
+          </button>
+
+        </form>
       </div>
     </div>
   );
