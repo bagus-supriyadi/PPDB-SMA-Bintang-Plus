@@ -13,21 +13,19 @@ export default function Home() {
       {/* HERO */}
       <section className="relative overflow-hidden pt-20 pb-32 bg-gradient-to-br from-blue-950 via-slate-900 to-black text-white">
 
-        {/* BACKGROUND */}
         <div 
           className="absolute inset-0 bg-cover bg-center opacity-20"
           style={{ backgroundImage: `url('${settings?.gambarHeaderBeranda || ''}')` }}
         />
 
-        {/* GLOW EFFECT */}
         <div className="absolute -top-32 -left-32 w-[400px] h-[400px] bg-blue-500/30 blur-[120px] rounded-full"></div>
         <div className="absolute bottom-0 right-0 w-[400px] h-[400px] bg-cyan-400/20 blur-[120px] rounded-full"></div>
 
         <div className="relative z-10 max-w-6xl mx-auto px-4 text-center">
 
-          {/* STATUS BADGE (NEON GLASS) */}
+          {/* STATUS */}
           <div className="inline-block mb-8">
-            <div className="px-6 py-2 rounded-full backdrop-blur-md bg-white/10 border border-white/20 shadow-lg text-sm tracking-wide">
+            <div className="px-6 py-2 rounded-full backdrop-blur-md bg-white/10 border border-white/20 shadow-lg text-sm">
               {isClosed 
                 ? `PPDB ${new Date().getFullYear()} TELAH DITUTUP` 
                 : `PPDB ${new Date().getFullYear()} DIBUKA`}
@@ -42,23 +40,23 @@ export default function Home() {
             </span>
           </h1>
 
-          {/* DESC (CENTER RAPI) */}
+          {/* DESC */}
           <p className="max-w-3xl mx-auto text-lg text-slate-300 leading-relaxed mb-10">
             Bergabunglah di SMA Bintang Plus, sekolah unggulan yang membentuk generasi berprestasi, berkarakter, 
             dan siap menembus PTN, sekolah kedinasan, serta dunia profesional.
           </p>
 
-          {/* BUTTON NEON */}
+          {/* BUTTON */}
           {isClosed ? (
-            <button className="px-10 py-4 rounded-full bg-slate-600 text-white cursor-not-allowed">
+            <button className="px-10 py-4 rounded-full bg-slate-600 text-white">
               Pendaftaran Ditutup
             </button>
           ) : (
             <Link
               to="/daftar"
-              className="relative inline-block px-10 py-4 rounded-full font-semibold text-white 
+              className="px-10 py-4 rounded-full font-semibold text-white 
               bg-gradient-to-r from-cyan-500 to-blue-600 
-              shadow-[0_0_20px_rgba(0,200,255,0.6)] 
+              shadow-[0_0_25px_rgba(0,200,255,0.7)] 
               hover:scale-105 transition-all duration-300"
             >
               Daftar Sekarang
@@ -88,7 +86,7 @@ export default function Home() {
               desc: "Bimbingan intensif masuk PTN dan sekolah kedinasan."
             }
           ].map((f, i) => (
-            <div key={i} className="p-8 rounded-2xl border backdrop-blur-md bg-white/70 shadow-lg hover:shadow-xl transition">
+            <div key={i} className="p-8 rounded-2xl border bg-white shadow-lg hover:shadow-xl transition">
               {f.icon}
               <h3 className="font-bold text-xl mt-4">{f.title}</h3>
               <p className="text-slate-600 mt-2">{f.desc}</p>
@@ -97,37 +95,53 @@ export default function Home() {
         </div>
       </section>
 
-      {/* SAMBUTAN */}
+      {/* SAMBUTAN ULTRA PREMIUM */}
       <section className="py-24 bg-slate-50">
-        <div className="max-w-6xl mx-auto px-4 grid md:grid-cols-2 gap-12 items-center">
+        <div className="max-w-6xl mx-auto px-4">
 
-          {/* FOTO */}
-          <div className="relative">
-            <img 
-              src="https://bagus-supriyadi.biz.id/gambarbebas/20260412-115605_Famella%20in%20front%20of%20SMA%20Bintang%20Plus.png"
-              className="rounded-2xl shadow-xl"
-            />
-          </div>
+          <div className="grid md:grid-cols-2 gap-12 items-center bg-white rounded-3xl shadow-xl p-10">
 
-          {/* TEXT */}
-          <div>
-            <h2 className="text-3xl font-bold mb-6">Sambutan Kepala Sekolah</h2>
+            {/* FOTO */}
+            <div>
+              <img 
+                src="https://bagus-supriyadi.biz.id/gambarbebas/20260412-115605_Famella%20in%20front%20of%20SMA%20Bintang%20Plus.png"
+                className="rounded-2xl shadow-lg w-full object-cover"
+              />
+            </div>
 
-            <p className="text-slate-600 leading-relaxed mb-4">
-              Selamat datang di SMA Bintang Plus.
-            </p>
+            {/* SAMBUTAN */}
+            <div>
+              <h2 className="text-3xl font-bold mb-6">Sambutan Kepala Sekolah</h2>
 
-            <p className="text-slate-600 leading-relaxed mb-4">
-              Di sini, kami tidak sekadar mendidik siswa untuk lulus sekolah — kami mempersiapkan mereka untuk menang dalam kehidupan.
-            </p>
+              <div className="text-slate-600 leading-relaxed space-y-4 text-[16.5px]">
 
-            <p className="text-slate-600 leading-relaxed mb-4">
-              Kami percaya, masa depan tidak ditentukan oleh keberuntungan, tetapi oleh lingkungan yang tepat dan pembinaan yang serius sejak sekarang.
-            </p>
+                <p>Selamat datang di SMA Bintang Plus.</p>
 
-            <p className="text-slate-600 leading-relaxed mb-6 font-semibold">
-              Mari bergabung bersama SMA Bintang Plus. Mulai langkah pasti menuju masa depan gemilang.
-            </p>
+                <p>
+                  Di sini, kami tidak sekadar mendidik siswa untuk lulus sekolah — kami mempersiapkan mereka untuk menang dalam kehidupan. 
+                  Setiap anak dibimbing secara terarah, dikenali potensinya, dan diarahkan menuju tujuan besar.
+                </p>
+
+                <p>
+                  Kami memahami bahwa setiap orang tua memiliki harapan besar, dan setiap siswa memiliki mimpi yang ingin diwujudkan. 
+                  Karena itu, SMA Bintang Plus hadir sebagai tempat yang bukan hanya mengajar, tetapi membentuk karakter dan mental juara.
+                </p>
+
+                <p>
+                  Lingkungan belajar kami dirancang untuk mendorong siswa berkembang maksimal — baik akademik, kepemimpinan, maupun kesiapan menghadapi dunia nyata.
+                </p>
+
+                <p>
+                  Kami percaya, masa depan tidak ditentukan oleh keberuntungan, tetapi oleh pilihan yang tepat hari ini.
+                </p>
+
+                <p className="font-semibold">
+                  Mari bergabung bersama SMA Bintang Plus. Mulai langkah pasti menuju masa depan gemilang.
+                </p>
+
+              </div>
+            </div>
+
           </div>
 
         </div>
@@ -135,17 +149,20 @@ export default function Home() {
 
       {/* VISI MISI */}
       <section className="py-24 bg-white">
-        <div className="max-w-6xl mx-auto px-4">
+        <div className="max-w-5xl mx-auto px-4 text-center">
 
-          <h2 className="text-3xl font-bold mb-8 text-center">Visi & Misi</h2>
+          <h2 className="text-3xl font-bold mb-10">Visi & Misi</h2>
 
-          <div className="p-8 rounded-2xl bg-slate-50 shadow-md mb-8">
-            <p className="italic text-center">
-              “Menjadi lembaga pendidikan unggulan di Bandar Lampung yang membentuk generasi berkarakter mulia, cerdas, berdaya saing global, serta berjiwa pemimpin.”
+          {/* VISI CENTER BALANCE */}
+          <div className="bg-slate-50 p-10 rounded-2xl shadow-md mb-12">
+            <p className="text-lg italic leading-relaxed">
+              Menjadi lembaga pendidikan unggulan di Bandar Lampung yang membentuk generasi berkarakter mulia,<br/>
+              cerdas, berdaya saing global, serta berjiwa pemimpin yang siap menjadi agen perubahan positif bagi bangsa dan dunia.
             </p>
           </div>
 
-          <div className="grid gap-4">
+          {/* MISI */}
+          <div className="grid gap-4 text-left max-w-3xl mx-auto">
             {[
               "Menyelenggarakan pendidikan berkualitas tinggi berbasis teknologi dan literasi digital.",
               "Menanamkan karakter unggul: jujur, disiplin, tanggung jawab.",
