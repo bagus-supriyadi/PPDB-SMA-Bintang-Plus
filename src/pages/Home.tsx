@@ -1,70 +1,66 @@
 import { motion } from 'motion/react';
 import { Link } from 'react-router-dom';
-import { BookOpen, Users, Trophy, ChevronRight, CheckCircle2, Calendar, FileText, CheckSquare, AlertCircle } from 'lucide-react';
+import { BookOpen, Users, Trophy, CheckCircle2 } from 'lucide-react';
 import { useSettings } from '../context/SettingsContext';
 
 export default function Home() {
   const { settings } = useSettings();
   const isClosed = settings?.statusPendaftaran === 'Tutup';
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: { staggerChildren: 0.1 },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { y: 20, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: { duration: 0.5 },
-    },
-  };
-
   return (
     <div className="flex flex-col min-h-screen">
 
       {/* HERO */}
-      <section className="relative overflow-hidden bg-white pt-16 pb-32">
+      <section className="relative overflow-hidden pt-20 pb-32 bg-gradient-to-br from-blue-950 via-slate-900 to-black text-white">
+
+        {/* BACKGROUND */}
         <div 
-          className={`absolute inset-0 bg-cover bg-center ${settings?.gambarHeaderBeranda ? 'opacity-30' : 'opacity-5'}`}
-          style={{ backgroundImage: `url('${settings?.gambarHeaderBeranda || 'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?q=80&w=2022&auto=format&fit=crop'}')` }}
-        ></div>
+          className="absolute inset-0 bg-cover bg-center opacity-20"
+          style={{ backgroundImage: `url('${settings?.gambarHeaderBeranda || ''}')` }}
+        />
 
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-50/90 via-white/80 to-green-50/90"></div>
+        {/* GLOW EFFECT */}
+        <div className="absolute -top-32 -left-32 w-[400px] h-[400px] bg-blue-500/30 blur-[120px] rounded-full"></div>
+        <div className="absolute bottom-0 right-0 w-[400px] h-[400px] bg-cyan-400/20 blur-[120px] rounded-full"></div>
 
-        <div className="max-w-7xl mx-auto px-4 text-center relative z-10">
+        <div className="relative z-10 max-w-6xl mx-auto px-4 text-center">
 
-          {/* STATUS */}
-          <motion.div className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm mb-8 ${isClosed ? 'bg-red-100 text-red-700' : 'bg-blue-100 text-blue-700'}`}>
-            {isClosed ? `PPDB ${new Date().getFullYear()} Telah Ditutup` : `PPDB ${new Date().getFullYear()} Dibuka`}
-          </motion.div>
+          {/* STATUS BADGE (NEON GLASS) */}
+          <div className="inline-block mb-8">
+            <div className="px-6 py-2 rounded-full backdrop-blur-md bg-white/10 border border-white/20 shadow-lg text-sm tracking-wide">
+              {isClosed 
+                ? `PPDB ${new Date().getFullYear()} TELAH DITUTUP` 
+                : `PPDB ${new Date().getFullYear()} DIBUKA`}
+            </div>
+          </div>
 
           {/* TITLE */}
-          <motion.h1 className="text-5xl md:text-6xl font-extrabold text-slate-900 mb-6">
+          <h1 className="text-5xl md:text-6xl font-extrabold leading-tight mb-6">
             Wujudkan Masa Depan Gemilang <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-green-500">
-              Bersama {settings?.namaSekolah || 'SMA Bintang Plus'}
+            <span className="bg-gradient-to-r from-cyan-400 to-blue-500 text-transparent bg-clip-text">
+              Bersama {settings?.namaSekolah}
             </span>
-          </motion.h1>
+          </h1>
 
-          {/* DESC */}
-          <motion.p className="text-lg text-slate-600 mb-10">
-            Bergabunglah di {settings?.namaSekolah || 'SMA Bintang Plus'}, 
-            sekolah unggulan yang membentuk generasi berprestasi, berkarakter, 
+          {/* DESC (CENTER RAPI) */}
+          <p className="max-w-3xl mx-auto text-lg text-slate-300 leading-relaxed mb-10">
+            Bergabunglah di SMA Bintang Plus, sekolah unggulan yang membentuk generasi berprestasi, berkarakter, 
             dan siap menembus PTN, sekolah kedinasan, serta dunia profesional.
-          </motion.p>
+          </p>
 
-          {/* BUTTON */}
+          {/* BUTTON NEON */}
           {isClosed ? (
-            <button disabled className="bg-slate-400 text-white px-8 py-4 rounded-full">
+            <button className="px-10 py-4 rounded-full bg-slate-600 text-white cursor-not-allowed">
               Pendaftaran Ditutup
             </button>
           ) : (
-            <Link to="/daftar" className="bg-blue-600 text-white px-8 py-4 rounded-full">
+            <Link
+              to="/daftar"
+              className="relative inline-block px-10 py-4 rounded-full font-semibold text-white 
+              bg-gradient-to-r from-cyan-500 to-blue-600 
+              shadow-[0_0_20px_rgba(0,200,255,0.6)] 
+              hover:scale-105 transition-all duration-300"
+            >
               Daftar Sekarang
             </Link>
           )}
@@ -73,8 +69,8 @@ export default function Home() {
       </section>
 
       {/* FITUR */}
-      <section className="py-24 bg-slate-50">
-        <div className="max-w-7xl mx-auto px-4 grid md:grid-cols-3 gap-8">
+      <section className="py-24 bg-white">
+        <div className="max-w-6xl mx-auto px-4 grid md:grid-cols-3 gap-8">
           {[
             {
               icon: <BookOpen className="text-blue-500" size={32} />,
@@ -87,12 +83,12 @@ export default function Home() {
               desc: "Pengajar berpengalaman dan fokus pada pembinaan siswa."
             },
             {
-              icon: <Trophy className="text-amber-500" size={32} />,
+              icon: <Trophy className="text-yellow-500" size={32} />,
               title: "Program Unggulan",
-              desc: "Bimbingan intensif masuk PTN, kedinasan, dan pengembangan karakter."
+              desc: "Bimbingan intensif masuk PTN dan sekolah kedinasan."
             }
           ].map((f, i) => (
-            <div key={i} className="bg-white p-8 rounded-xl shadow">
+            <div key={i} className="p-8 rounded-2xl border backdrop-blur-md bg-white/70 shadow-lg hover:shadow-xl transition">
               {f.icon}
               <h3 className="font-bold text-xl mt-4">{f.title}</h3>
               <p className="text-slate-600 mt-2">{f.desc}</p>
@@ -102,38 +98,67 @@ export default function Home() {
       </section>
 
       {/* SAMBUTAN */}
-      <section className="py-24 bg-white">
-        <div className="max-w-7xl mx-auto px-4 grid lg:grid-cols-2 gap-16">
+      <section className="py-24 bg-slate-50">
+        <div className="max-w-6xl mx-auto px-4 grid md:grid-cols-2 gap-12 items-center">
 
+          {/* FOTO */}
+          <div className="relative">
+            <img 
+              src="https://bagus-supriyadi.biz.id/gambarbebas/20260412-115605_Famella%20in%20front%20of%20SMA%20Bintang%20Plus.png"
+              className="rounded-2xl shadow-xl"
+            />
+          </div>
+
+          {/* TEXT */}
           <div>
             <h2 className="text-3xl font-bold mb-6">Sambutan Kepala Sekolah</h2>
 
-            {settings?.sambutanKepalaSekolah?.split('\n').map((p, i) => (
-              <p key={i} className="mb-4 text-slate-600">{p}</p>
-            ))}
+            <p className="text-slate-600 leading-relaxed mb-4">
+              Selamat datang di SMA Bintang Plus.
+            </p>
 
-            <div className="flex items-center gap-4 mt-6">
-              <img src={settings?.fotoKepalaSekolah} className="w-16 h-16 rounded-full object-cover" />
-              <div>
-                <h4 className="font-bold">{settings?.namaKepalaSekolah}</h4>
-                <p className="text-sm text-slate-500">Kepala Sekolah</p>
-              </div>
-            </div>
+            <p className="text-slate-600 leading-relaxed mb-4">
+              Di sini, kami tidak sekadar mendidik siswa untuk lulus sekolah — kami mempersiapkan mereka untuk menang dalam kehidupan.
+            </p>
+
+            <p className="text-slate-600 leading-relaxed mb-4">
+              Kami percaya, masa depan tidak ditentukan oleh keberuntungan, tetapi oleh lingkungan yang tepat dan pembinaan yang serius sejak sekarang.
+            </p>
+
+            <p className="text-slate-600 leading-relaxed mb-6 font-semibold">
+              Mari bergabung bersama SMA Bintang Plus. Mulai langkah pasti menuju masa depan gemilang.
+            </p>
           </div>
 
-          <div className="bg-slate-50 p-8 rounded-xl">
-            <h3 className="font-bold text-2xl mb-4">Visi & Misi</h3>
+        </div>
+      </section>
 
-            <p className="italic mb-4">{settings?.visiSekolah}</p>
+      {/* VISI MISI */}
+      <section className="py-24 bg-white">
+        <div className="max-w-6xl mx-auto px-4">
 
-            <ul className="space-y-2">
-              {settings?.misiSekolah?.split('\n').map((m, i) => (
-                <li key={i} className="flex gap-2">
-                  <CheckCircle2 size={20} className="text-green-500"/>
-                  {m}
-                </li>
-              ))}
-            </ul>
+          <h2 className="text-3xl font-bold mb-8 text-center">Visi & Misi</h2>
+
+          <div className="p-8 rounded-2xl bg-slate-50 shadow-md mb-8">
+            <p className="italic text-center">
+              “Menjadi lembaga pendidikan unggulan di Bandar Lampung yang membentuk generasi berkarakter mulia, cerdas, berdaya saing global, serta berjiwa pemimpin.”
+            </p>
+          </div>
+
+          <div className="grid gap-4">
+            {[
+              "Menyelenggarakan pendidikan berkualitas tinggi berbasis teknologi dan literasi digital.",
+              "Menanamkan karakter unggul: jujur, disiplin, tanggung jawab.",
+              "Mengembangkan potensi akademik dan non-akademik.",
+              "Membangun jiwa kepemimpinan dan kemandirian.",
+              "Membangun kemitraan dengan dunia usaha dan perguruan tinggi.",
+              "Mengantarkan siswa mencapai cita-cita terbaiknya."
+            ].map((m, i) => (
+              <div key={i} className="flex gap-3 items-start">
+                <CheckCircle2 className="text-green-500 mt-1"/>
+                <p>{m}</p>
+              </div>
+            ))}
           </div>
 
         </div>
@@ -141,23 +166,25 @@ export default function Home() {
 
       {/* ALUR */}
       <section className="py-24 bg-slate-900 text-white">
-        <div className="max-w-7xl mx-auto px-4 text-center mb-12">
+        <div className="max-w-6xl mx-auto px-4 text-center mb-12">
           <h2 className="text-3xl font-bold">Alur Pendaftaran PPDB SMA</h2>
           <p className="text-slate-400 mt-2">
             Ikuti langkah berikut untuk mendaftar di {settings?.namaSekolah}
           </p>
         </div>
 
-        <div className="grid md:grid-cols-4 gap-8 max-w-7xl mx-auto px-4">
+        <div className="grid md:grid-cols-4 gap-6 max-w-6xl mx-auto px-4">
           {[
             "Isi Formulir",
-            "Upload Berkas (Ijazah SMP/MTs, KK, dll)",
-            "Verifikasi",
+            "Upload Berkas",
+            "Verifikasi Data",
             "Pengumuman"
           ].map((t, i) => (
-            <div key={i} className="text-center">
-              <div className="bg-slate-800 p-6 rounded-xl mb-4">{i+1}</div>
-              <h3 className="font-bold">{t}</h3>
+            <div key={i} className="p-6 rounded-2xl backdrop-blur-md bg-white/10 border border-white/20 shadow-lg hover:scale-105 transition">
+              <div className="mb-3 text-cyan-400 font-bold">
+                Langkah {i + 1}
+              </div>
+              <h3 className="font-semibold">{t}</h3>
             </div>
           ))}
         </div>
