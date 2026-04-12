@@ -84,7 +84,7 @@ const getInitialMockSettings = (): AppSettings => {
     persyaratanDaftarUlang: "1. Membawa Bukti Kelulusan yang dicetak\n2. Membawa Fotokopi Akta Kelahiran (2 lembar)\n3. Membawa Fotokopi Kartu Keluarga (2 lembar)\n4. Membawa Pas Foto 3x4 (4 lembar)\n5. Melakukan pembayaran administrasi awal",
     tanggalDaftarUlang: "2024-07-15",
     tanggalPengumuman: "",
-    logoSekolah: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?q=80&w=2022&auto=format&fit=crop",
+    logoSekolah: "https://bagus-supriyadi.biz.id/gambarbebas/20260412-101753_LOGO%20BINTANG%20PLUS.jpg",
     tahunPendaftaran: new Date().getFullYear().toString(),
     koordinatSekolah: "5°23'29.1"S 105°12'35.2"E", // Default to Bandar Lampung
     sambutanKepalaSekolah: "Selamat datang di SMA Bintang Plus, tempat di mana masa depan tidak sekadar direncanakan, tetapi dipersiapkan dengan serius dan terarah. Kami berkomitmen membentuk generasi berprestasi, berkarakter, dan siap bersaing menembus PTN ternama, sekolah kedinasan, hingga dunia profesional. Di sini, setiap siswa dibimbing untuk mengenali potensi terbaiknya dan didorong menjadi pribadi yang disiplin, tangguh, serta bermental juara. Bergabunglah bersama kami, dan mulai langkah pasti menuju masa depan gemilang",
