@@ -75,22 +75,22 @@ const getInitialMockSettings = (): AppSettings => {
     }
   }
   return {
-    namaSekolah: "SDN Harapan Bangsa",
-    alamat: "Jl. Pendidikan No. 123, Kota Pelajar, Indonesia 12345",
-    telepon: "(021) 1234-5678",
-    email: "info@sdnharapanbangsa.sch.id",
-    deskripsi: "Mencetak generasi penerus bangsa yang cerdas, berakhlak mulia, dan siap menghadapi tantangan masa depan dengan pendidikan berkualitas.",
+    namaSekolah: "SMA Bintang Plus",
+    alamat: "Jalan Pendidikan No.32, Kelurahan Sumber Rejo, Kecamatan Kemiling, Kota Bandar Lampung, 35152",
+    telepon: "0831-3516-5464 - 0831-5157-2671",
+    email: "smabintangplus@gmail.com",
+    deskripsi: "SMA Bintang Plus bukan sekadar sekolah, tapi tempat lahirnya siswa berprestasi dan bermental juara, dibimbing secara intensif dengan sistem terarah hingga siap menembus PTN ternama, sekolah kedinasan, dan meraih masa depan yang benar-benar pasti",
     statusPendaftaran: "Buka",
     persyaratanDaftarUlang: "1. Membawa Bukti Kelulusan yang dicetak\n2. Membawa Fotokopi Akta Kelahiran (2 lembar)\n3. Membawa Fotokopi Kartu Keluarga (2 lembar)\n4. Membawa Pas Foto 3x4 (4 lembar)\n5. Melakukan pembayaran administrasi awal",
     tanggalDaftarUlang: "2024-07-15",
     tanggalPengumuman: "",
     logoSekolah: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?q=80&w=2022&auto=format&fit=crop",
     tahunPendaftaran: new Date().getFullYear().toString(),
-    koordinatSekolah: "-6.200000, 106.816666", // Default to Jakarta
-    sambutanKepalaSekolah: "Selamat datang di website resmi PPDB SDN Harapan Bangsa. Kami berkomitmen untuk memberikan pelayanan pendidikan terbaik bagi putra-putri Anda. Mari bergabung bersama kami untuk mencetak generasi penerus bangsa yang cerdas, berakhlak mulia, dan berprestasi.",
+    koordinatSekolah: "5°23'29.1"S 105°12'35.2"E", // Default to Bandar Lampung
+    sambutanKepalaSekolah: "Selamat datang di SMA Bintang Plus, tempat di mana masa depan tidak sekadar direncanakan, tetapi dipersiapkan dengan serius dan terarah. Kami berkomitmen membentuk generasi berprestasi, berkarakter, dan siap bersaing menembus PTN ternama, sekolah kedinasan, hingga dunia profesional. Di sini, setiap siswa dibimbing untuk mengenali potensi terbaiknya dan didorong menjadi pribadi yang disiplin, tangguh, serta bermental juara. Bergabunglah bersama kami, dan mulai langkah pasti menuju masa depan gemilang",
     fotoKepalaSekolah: "https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=200&auto=format&fit=crop",
-    visiSekolah: "Menjadi sekolah dasar unggulan yang menghasilkan lulusan berakhlak mulia, cerdas, terampil, dan berwawasan lingkungan.",
-    misiSekolah: "1. Menyelenggarakan pembelajaran yang aktif, inovatif, kreatif, efektif, dan menyenangkan (PAIKEM).\n2. Menanamkan nilai-nilai agama dan budi pekerti luhur dalam kehidupan sehari-hari.\n3. Mengembangkan potensi, bakat, dan minat siswa melalui kegiatan ekstrakurikuler.\n4. Menciptakan lingkungan sekolah yang bersih, sehat, dan asri.",
+    visiSekolah: "Menjadi lembaga pendidikan unggulan di Bandar Lampung yang membentuk generasi berkarakter mulia, cerdas, berdaya saing global, serta berjiwa pemimpin yang siap menjadi agen perubahan positif bagi bangsa dan dunia.",
+    misiSekolah: "1.	Menyelenggarakan pendidikan berkualitas tinggi berbasis ilmu pengetahuan, teknologi, nilai budaya, dan literasi digital untuk membentuk peserta didik yang kompeten, adaptif, dan berwawasan global. 2.	Menanamkan karakter unggul melalui pembiasaan nilai kejujuran, disiplin, tanggung jawab, kepedulian, religiusitas, dan etika, dalam lingkungan yang aman, inklusif, dan penuh integritas. 3.	Mengembangkan potensi akademik dan non-akademik peserta didik melalui kurikulum inovatif, program talent development, dan pembinaan minat bakat yang terstruktur. 4.	Membangun budaya kepemimpinan dan kemandirian melalui kegiatan organisasi, project based learning, kewirausahaan, public speaking, dan life skills. 5.	Membangun kemitraan strategis dengan dunia usaha, perguruan tinggi, komunitas, dan lembaga profesional guna memperkuat kesiapan peserta didik menghadapi dunia kerja dan tantangan masa depan. 6.	Mengantarkan peserta didik mencapai cita-cita terbaiknya melalui pendampingan akademik, mentoring karir, bimbingan masuk perguruan tinggi negeri/swasta terbaik, serta pembentukan karakter yang kokoh.",
     formFields: [
       { id: "Nama Lengkap", label: "Nama Lengkap", type: "text", required: true },
       { id: "NIK", label: "NIK", type: "text", required: true },
@@ -111,7 +111,7 @@ const getInitialMockSettings = (): AppSettings => {
       { id: "1", icon: "FileDigit", title: "Kartu Keluarga (KK)", description: "Asli atau fotokopi yang dilegalisir. Pastikan NIK dan nama calon siswa tercantum dengan benar." },
       { id: "2", icon: "FileBadge", title: "Akta Kelahiran", description: "Dokumen asli atau fotokopi legalisir untuk verifikasi usia dan data diri calon siswa." },
       { id: "3", icon: "FileImage", title: "Pas Foto Terbaru", description: "Pas foto berwarna ukuran 3x4 dengan latar belakang merah atau biru." },
-      { id: "4", icon: "FileText", title: "Ijazah / SKHUN (Jika Ada)", description: "Surat Keterangan Lulus atau Ijazah dari jenjang pendidikan sebelumnya (TK/PAUD)." }
+      { id: "4", icon: "FileText", title: "Ijazah / SKHUN (Jika Ada)", description: "Surat Keterangan Lulus atau Ijazah dari jenjang pendidikan sebelumnya (SMP/MTs)." }
     ],
     panduanAlur: [
       "Siapkan seluruh dokumen persyaratan dalam bentuk file digital (foto/scan).",
