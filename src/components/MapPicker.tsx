@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState } from 'react';
 import { MapContainer, TileLayer, Marker, useMapEvents } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
@@ -28,15 +28,16 @@ function LocationMarker({ onLocationSelect, initialLocation }: MapPickerProps) {
     },
   });
 
-  return position === null ? null : (
-    <Marker position={position}></Marker>
-  );
+  return position === null ? null : <Marker position={position}></Marker>;
 }
 
 export default function MapPicker({ onLocationSelect, initialLocation }: MapPickerProps) {
-  const defaultCenter = initialLocation || { lat: -6.200000, lng: 106.816666 };
-  const [center, setCenter] = useState<{lat: number, lng: number}>(defaultCenter);
-  const [mapKey, setMapKey] = useState(0); // To force re-render MapContainer when center changes drastically
+
+  // ✅ Default ke lokasi SMA Bintang Plus (Bandar Lampung)
+  const defaultCenter = initialLocation || { lat: -5.391417, lng: 105.209778 };
+
+  const [center, setCenter] = useState<{ lat: number, lng: number }>(defaultCenter);
+  const [mapKey, setMapKey] = useState(0);
 
   const handleGetLocation = () => {
     if (navigator.geolocation) {
@@ -59,18 +60,30 @@ export default function MapPicker({ onLocationSelect, initialLocation }: MapPick
 
   return (
     <div className="space-y-2">
+
+      {/* INFO USER */}
+      <p className="text-xs text-slate-500">
+        Klik pada peta untuk menentukan lokasi alamat Anda
+      </p>
+
       <button
         type="button"
         onClick={handleGetLocation}
         className="text-sm bg-slate-100 hover:bg-slate-200 text-slate-700 py-1.5 px-3 rounded-md transition-colors flex items-center gap-2 border border-slate-300"
       >
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path><path d="M2 12h20"></path></svg>
-        Gunakan Lokasi Saat Ini
+        📍 Gunakan Lokasi Saat Ini
       </button>
+
       <div className="h-[300px] w-full rounded-lg overflow-hidden border border-slate-300 z-0 relative">
-        <MapContainer key={mapKey} center={[center.lat, center.lng]} zoom={15} scrollWheelZoom={false} className="h-full w-full z-0">
+        <MapContainer
+          key={mapKey}
+          center={[center.lat, center.lng]}
+          zoom={15}
+          scrollWheelZoom={false}
+          className="h-full w-full z-0"
+        >
           <TileLayer
-            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            attribution='&copy; OpenStreetMap contributors'
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
           <LocationMarker onLocationSelect={onLocationSelect} initialLocation={center} />
