@@ -86,7 +86,7 @@ const getInitialMockSettings = (): AppSettings => {
     tanggalPengumuman: "",
     logoSekolah: "https://bagus-supriyadi.biz.id/gambarbebas/20260412-101753_LOGO%20BINTANG%20PLUS.jpg",
     tahunPendaftaran: new Date().getFullYear().toString(),
-    koordinatSekolah: "5°23'29.1"S 105°12'35.2"E", // Default to Bandar Lampung
+    koordinatSekolah: "-5.391417, 105.209778", // Default to Bandar Lampung
     sambutanKepalaSekolah: "Selamat datang di SMA Bintang Plus, tempat di mana masa depan tidak sekadar direncanakan, tetapi dipersiapkan dengan serius dan terarah. Kami berkomitmen membentuk generasi berprestasi, berkarakter, dan siap bersaing menembus PTN ternama, sekolah kedinasan, hingga dunia profesional. Di sini, setiap siswa dibimbing untuk mengenali potensi terbaiknya dan didorong menjadi pribadi yang disiplin, tangguh, serta bermental juara. Bergabunglah bersama kami, dan mulai langkah pasti menuju masa depan gemilang",
     fotoKepalaSekolah: "https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=200&auto=format&fit=crop",
     visiSekolah: "Menjadi lembaga pendidikan unggulan di Bandar Lampung yang membentuk generasi berkarakter mulia, cerdas, berdaya saing global, serta berjiwa pemimpin yang siap menjadi agen perubahan positif bagi bangsa dan dunia.",
