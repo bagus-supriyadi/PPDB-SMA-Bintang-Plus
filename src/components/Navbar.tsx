@@ -21,21 +21,30 @@ export default function Navbar() {
   return (
     <nav className="sticky top-0 z-50 w-full backdrop-blur-md bg-white/80 border-b border-slate-200 shadow-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
         <div className="flex justify-between h-16 items-center">
+          
+          {/* LOGO */}
           <Link to="/" className="flex items-center gap-2">
             {settings?.logoSekolah ? (
-              <img src={settings.logoSekolah} alt="Logo Sekolah" className="h-10 w-auto object-contain" referrerPolicy="no-referrer" />
+              <img
+                src={settings.logoSekolah}
+                alt="Logo Sekolah"
+                className="h-10 w-auto object-contain"
+                referrerPolicy="no-referrer"
+              />
             ) : (
               <div className="bg-blue-600 p-2 rounded-lg text-white">
                 <GraduationCap size={24} />
               </div>
             )}
+
             <span className="font-bold text-xl tracking-tight text-slate-900">
-              {settings?.namaSekolah || 'SDN Harapan Bangsa'}
+              {settings?.namaSekolah || 'SMA Bintang Plus'}
             </span>
           </Link>
 
-          {/* Desktop Menu */}
+          {/* DESKTOP MENU */}
           <div className="hidden md:flex items-center space-x-8">
             {links.map((link) => (
               <Link
@@ -43,12 +52,16 @@ export default function Navbar() {
                 to={link.path}
                 className={cn(
                   "text-sm font-medium transition-colors hover:text-blue-600",
-                  location.pathname === link.path ? "text-blue-600" : "text-slate-600"
+                  location.pathname === link.path
+                    ? "text-blue-600"
+                    : "text-slate-600"
                 )}
               >
                 {link.name}
               </Link>
             ))}
+
+            {/* CTA */}
             <Link
               to="/daftar"
               className="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-full text-sm font-medium transition-all shadow-md hover:shadow-lg"
@@ -57,7 +70,7 @@ export default function Navbar() {
             </Link>
           </div>
 
-          {/* Mobile Menu Button */}
+          {/* MOBILE BUTTON */}
           <div className="md:hidden flex items-center">
             <button
               onClick={() => setIsOpen(!isOpen)}
@@ -69,7 +82,7 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* Mobile Menu */}
+      {/* MOBILE MENU */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
@@ -94,6 +107,15 @@ export default function Navbar() {
                   {link.name}
                 </Link>
               ))}
+
+              {/* CTA MOBILE */}
+              <Link
+                to="/daftar"
+                onClick={() => setIsOpen(false)}
+                className="block text-center bg-blue-600 text-white px-4 py-2 rounded-md mt-2"
+              >
+                Daftar Sekarang
+              </Link>
             </div>
           </motion.div>
         )}
