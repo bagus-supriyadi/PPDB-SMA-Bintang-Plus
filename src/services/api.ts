@@ -75,11 +75,11 @@ const getInitialMockSettings = (): AppSettings => {
     }
   }
   return {
-    namaSekolah: "SDN Harapan Bangsa",
-    alamat: "Jl. Pendidikan No. 123, Kota Pelajar, Indonesia 12345",
-    telepon: "(021) 1234-5678",
-    email: "info@sdnharapanbangsa.sch.id",
-    deskripsi: "Mencetak generasi penerus bangsa yang cerdas, berakhlak mulia, dan siap menghadapi tantangan masa depan dengan pendidikan berkualitas.",
+    namaSekolah: "SMA Bintang Plus",
+    alamat: "Jalan Pendidikan No.32, Kelurahan Sumber Rejo, Kecamatan Kemiling, Kota Bandar Lampung, 35152",
+    telepon: "083-15157-2671 / 0831-3516-5464",
+    email: "smabintangplus@gmail.com",
+    deskripsi: "Sekolah unggulan berkarakter di Bandar Lampung dengan program akademik dan non-akademik terbaik",
     statusPendaftaran: "Buka",
     persyaratanDaftarUlang: "1. Membawa Bukti Kelulusan yang dicetak\n2. Membawa Fotokopi Akta Kelahiran (2 lembar)\n3. Membawa Fotokopi Kartu Keluarga (2 lembar)\n4. Membawa Pas Foto 3x4 (4 lembar)\n5. Melakukan pembayaran administrasi awal",
     tanggalDaftarUlang: "2024-07-15",
@@ -111,7 +111,7 @@ const getInitialMockSettings = (): AppSettings => {
       { id: "1", icon: "FileDigit", title: "Kartu Keluarga (KK)", description: "Asli atau fotokopi yang dilegalisir. Pastikan NIK dan nama calon siswa tercantum dengan benar." },
       { id: "2", icon: "FileBadge", title: "Akta Kelahiran", description: "Dokumen asli atau fotokopi legalisir untuk verifikasi usia dan data diri calon siswa." },
       { id: "3", icon: "FileImage", title: "Pas Foto Terbaru", description: "Pas foto berwarna ukuran 3x4 dengan latar belakang merah atau biru." },
-      { id: "4", icon: "FileText", title: "Ijazah / SKHUN (Jika Ada)", description: "Surat Keterangan Lulus atau Ijazah dari jenjang pendidikan sebelumnya (TK/PAUD)." }
+      { id: "4", icon: "FileText", title: "Ijazah / SKHUN (Jika Ada)", description: "Surat Keterangan Lulus atau Ijazah dari jenjang pendidikan sebelumnya (SMTP/MTS)." }
     ],
     panduanAlur: [
       "Siapkan seluruh dokumen persyaratan dalam bentuk file digital (foto/scan).",
