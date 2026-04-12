@@ -13,13 +13,38 @@ export default function AdminLogin() {
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    // ✅ VALIDASI DASAR
+    if (!username.trim() || !password.trim()) {
+      Swal.fire({
+        icon: 'warning',
+        title: 'Input Tidak Lengkap',
+        text: 'Username dan password wajib diisi',
+        confirmButtonColor: '#3b82f6'
+      });
+      return;
+    }
+
     setIsLoading(true);
 
     try {
       const response = await loginAdmin(username, password);
+
       if (response.status === 'success') {
         sessionStorage.setItem('isAdmin', 'true');
-        navigate('/admin');
+
+        Swal.fire({
+          icon: 'success',
+          title: 'Login Berhasil',
+          text: 'Selamat datang Admin',
+          timer: 1200,
+          showConfirmButton: false
+        });
+
+        setTimeout(() => {
+          navigate('/admin');
+        }, 1200);
+
       } else {
         Swal.fire({
           icon: 'error',
@@ -57,22 +82,19 @@ export default function AdminLogin() {
               <Lock className="text-blue-400" size={32} />
             </div>
             <h2 className="text-2xl font-bold mb-2">Login Admin</h2>
-            <p className="text-slate-300 text-sm">Masuk untuk mengelola data pendaftaran PPDB.</p>
+            <p className="text-slate-300 text-sm">Masuk untuk mengelola data PPDB SMA Bintang Plus.</p>
           </div>
 
           <form onSubmit={handleLogin} className="p-8 space-y-6">
             <div>
               <label className="block text-sm font-medium text-slate-700 mb-2">Username</label>
               <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <User size={18} className="text-slate-400" />
-                </div>
+                <User size={18} className="absolute left-3 top-3 text-slate-400" />
                 <input
                   type="text"
-                  required
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
-                  className="block w-full pl-10 pr-3 py-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                  className="w-full pl-10 pr-3 py-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-500"
                   placeholder="Masukkan username"
                 />
               </div>
@@ -81,15 +103,12 @@ export default function AdminLogin() {
             <div>
               <label className="block text-sm font-medium text-slate-700 mb-2">Password</label>
               <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <Lock size={18} className="text-slate-400" />
-                </div>
+                <Lock size={18} className="absolute left-3 top-3 text-slate-400" />
                 <input
                   type="password"
-                  required
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="block w-full pl-10 pr-3 py-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                  className="w-full pl-10 pr-3 py-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-500"
                   placeholder="Masukkan password"
                 />
               </div>
@@ -98,7 +117,7 @@ export default function AdminLogin() {
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-xl transition-all shadow-md hover:shadow-lg disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+              className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-xl transition-all flex justify-center items-center gap-2"
             >
               {isLoading ? (
                 <>
